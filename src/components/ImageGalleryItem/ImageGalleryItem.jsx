@@ -1,11 +1,16 @@
 import PropTypes from 'prop-types';
 import css from './ImageGalleryItem.module.css';
 
-export default function ImageGalleryItem({ url, tags, onClick }) {
+const ImageGalleryItem = ({ url, tags, onClick }) => {
     return (
         <>
             <li className={css.imageGalleryItem}>
-                <img src={url} alt={tags} className={css.imageGalleryItemImage} onClick={() => onClick(url)} />
+                <img 
+                src={url} 
+                alt={tags} 
+                className={css.imageGalleryItemImage} 
+                onClick={() => onClick(url)} 
+                />
             </li>
         </>
     );
@@ -16,3 +21,5 @@ ImageGalleryItem.propTypes = {
     tags: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
 };
+
+export default ImageGalleryItem;

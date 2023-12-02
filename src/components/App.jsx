@@ -1,47 +1,48 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Modal from './Modal/Modal';
 
-class App extends Component {
-    state = {
-        inputValue: '',
-        modalImage: '',
-        showModal: false,
-        page: 1,
-    };
+const App = () => {
+        const [inputValue, setInputValue] = useState('');
+        const [modalImg, setModalImg] = useState('');
+        const [showModal, setShowModal] = useState(false);
+        const [page, setPage] = useState(1);
 
-    getInputValue = (handleValue) => {
-        this.setState({ inputValue: handleValue, page: 1 })
-    }
+        const getInputValue = (handleValue) => {
+            setInputValue(handleValue);
+            setPage(1);
+        };
 
-    toggleModal = () => {
-        this.setState(({ showModal }) => ({ showModal: !showModal }))
-    }
+        const toggleModal = () => {
+            setShowModal((showModal) => !showModal);
+        };
+        
+        const getLargeImg = (url) => {
+            toggleModal();
+            setModalImg(url);
+        };
 
-    getLargeImg = url => {
-        this.toggleModal();
-        this.setState({ modalImg: url });
-    }
-
-    loadMoreBtn = () => {
-        this.setState(prevState => ({
-            page: prevState.page + 1,
-            }));
-        }
-
-
-    render() {
-        const { modalImg, showModal ,page} = this.state;
+        const loadMoreBtn = () => {
+            setPage((prevState) => prevState + 1);
+        };
 
         return (
             <>
-                <Searchbar getInputValue={this.getInputValue}/>
-                <ImageGallery inputValue={this.state.inputValue} onClick={this.getLargeImg} loadMoreBtn={this.loadMoreBtn} page={ page}/>
-                {showModal && <Modal url={modalImg} onClose={this.toggleModal} />}
+                <Searchbar getInputValue={getInputValue}/>
+                <ImageGallery 
+                inputValue={inputValue} 
+                onClick={getLargeImg} 
+                loadMoreBtn={loadMoreBtn} 
+                page={ page}
+                />
+                {showModal && 
+                <Modal 
+                url={modalImg} 
+                onClose={toggleModal} 
+                />}
             </>
-        )
-    }
-}
+        );
+    };
 
 export default App;
